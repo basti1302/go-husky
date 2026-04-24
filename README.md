@@ -63,7 +63,8 @@ $ husky add pre-commit "
 "
 ```
 
-If you have made any other changes in the hooks you can apply them by using `$ husky install`
+If you have made any other changes in the hooks you can apply them by using `husky install`.
+
 
 ---
 
