@@ -1,4 +1,4 @@
-module github.com/automation-co/husky
+module github.com/basti1302/go-husky
 
 go 1.17
 

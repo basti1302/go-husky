@@ -1,36 +1,22 @@
-<img src="https://user-images.githubusercontent.com/64161383/155763268-e09d9613-a53f-4ec7-a943-aab93ef2ffa6.png" width="150px" alt="logo"  align="right" />
-
-<div align="left">
-
-
 # Husky
 
-[![Build Status](https://github.com/automation-co/husky/workflows/Go/badge.svg?branch=main)](https://github.com/automation-co/husky/actions?query=branch%3Amain)
-[![Release](https://img.shields.io/github/release/automation-co/husky.svg)](https://github.com/automation-co/husky/releases)
-![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/automation-co/husky)
-[![Go Report Card](https://goreportcard.com/badge/github.com/automation-co/husky)](https://goreportcard.com/report/github.com/automation-co/husky)
-![GitHub](https://img.shields.io/github/license/automation-co/husky)
-![GitHub issues](https://img.shields.io/github/issues/automation-co/husky)
+[![Build Status](https://github.com/basti1302/go-husky/workflows/Go/badge.svg?branch=main)](https://github.com/basti1302/go-husky/actions?query=branch%3Amain)
+[![Release](https://img.shields.io/github/release/basti1302/go-husky.svg)](https://github.com/basti1302/go-husky/releases)
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/basti1302/go-husky)
+[![Go Report Card](https://goreportcard.com/badge/github.com/basti1302/go-husky)](https://goreportcard.com/report/github.com/basti1302/go-husky)
+![GitHub](https://img.shields.io/github/license/basti1302/go-husky)
+![GitHub issues](https://img.shields.io/github/issues/basti1302/go-husky)
 
- </div>
+**This is a fork of <https://github.com/automation-co/husky>, adding support for git worktrees.**
 
-<!-- --- -->
-
-**Make githooks easy!**
-
-Inspired from the [husky.js](https://github.com/typicode/husky)
-
-
----
-<a href="https://www.producthunt.com/posts/husky-4?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-husky&#0045;4" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=346044&theme=light" align="right" alt="Husky - Git&#0032;hooks&#0032;made&#0032;easy&#0032;on&#0032;go | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
-
+Inspired by [husky.js](https://github.com/typicode/husky)
 
 ## Docs
 
 ### Installation
 
 ```
-go install github.com/automation-co/husky@latest
+go install github.com/basti1302/go-husky@latest
 ```
 
 ### Getting Started
@@ -40,31 +26,35 @@ go install github.com/automation-co/husky@latest
 If you already have custom hooks in `.git/hooks`, make sure to create a backup of the hooks before
 starting to use `husky`.
 
-You can initialise husky by `$ husky init`
+*Note:* All commands are supposed to be run from within your git repository.
+If you use worktrees, in particular with a bare repository, run the commands from within a worktree, not the bare repository root.
 
-> Make sure you have git initialised
+Initialize husky by running `husky init`.
 
-This will make the .husky folder with the hooks folder and a sample pre-commit hook
+This will create the `.husky/hooks` folder with an example pre-commit hook.
 
-You can add hooks using
+You can add more hooks by running:
 
 ```bash
-$ husky add <hook> "
+husky add <hook> "
   <your commands for that hook>
 "
 ```
 
+You can also create and edit files within `.husky/hooks`.
+
+The `.husky/hooks` directory is supposed to be under version control, that is, you should commit and push it.
+
 ### Example
 
 ```bash
-$ husky add pre-commit "
+husky add pre-commit "
   go build -v ./... 
   go test -v ./...
 "
 ```
 
-If you have made any other changes in the hooks you can apply them by using `husky install`.
-
+If you have made any other changes in the hooks you can apply them by running `husky install`.
 
 ---
 
@@ -93,6 +83,5 @@ If you feel husky does not fulfill your needs you can also check out:
 
 <div align="center">
 
-Developed by [@automation-co](https://github.com/automation-co)
-
-</div>
+Developed originally by [@automation-co](https://github.com/automation-co), with additions by
+[@basti1302](https://github.com/basti1302).

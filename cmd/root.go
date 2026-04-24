@@ -12,7 +12,7 @@ var rootCmd = &cobra.Command{
 	Long: `husky is a tool to help you manage your git hooks.
 
 For more information, please visit
-https://github.com/automation-co/husky
+https://github.com/basti1302/go-husky
 `,
 }
 

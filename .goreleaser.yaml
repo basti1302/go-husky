@@ -35,5 +35,5 @@ changelog:
 
 release:
   github:
-    owner: automation-co
-    name: husky
+    owner: basti1302
+    name: go-husky

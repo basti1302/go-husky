@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	huskyLib "github.com/automation-co/husky/internal/lib"
+	huskyLib "github.com/basti1302/go-husky/internal/lib"
 )
 
 // global error message declration block

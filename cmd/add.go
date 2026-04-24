@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/automation-co/husky/internal/lib"
+	"github.com/basti1302/go-husky/internal/lib"
 	"github.com/spf13/cobra"
 )
 
