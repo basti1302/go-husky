@@ -62,11 +62,12 @@ func randomString(length int) string {
 
 // TestAddInvalidHook validates that the lib.Add() will return error when invalid hook name is provided
 func TestAddInvalidHook(t *testing.T) {
-	err := huskyLib.Add(randomString(13), randomString(20))
+	hook := randomString(13)
+	err := huskyLib.Add(hook, randomString(20))
 
 	if err == nil {
 		t.Error(nilErrorMsg)
-	} else if err.Error() != "invalid hook name" {
+	} else if !strings.HasPrefix(err.Error(), "invalid hook name "+hook) {
 		t.Error(err)
 	}
 }
@@ -248,7 +249,7 @@ func TestInit(t *testing.T) {
 
 	if content, err := ioutil.ReadFile(path.Join(repoPath, ".husky", "hooks", "pre-commit")); err != nil {
 		t.Error(err)
-	} else if "#!/bin/sh" != string(content) {
+	} else if "#!/bin/sh\n" != string(content) {
 		t.Error(invalidContentsErrorMsg)
 	}
 }

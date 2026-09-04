@@ -4,33 +4,61 @@ on:
   push:
     branches:
       - main
+  # Allows publishing a release for a tag that already exists, for example the
+  # initial v1.0.0: gh workflow run release.yml --ref v1.0.0
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
 jobs:
   bump:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
+    outputs:
+      new_tag: ${{ steps.tag_version.outputs.new_tag }}
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # github-tag-action needs the full history and all existing tags to
+          # determine the previous version.
+          fetch-depth: 0
       - name: Bump version and push tag
         id: tag_version
-        uses: mathieudutour/github-tag-action@v6.0
+        uses: mathieudutour/github-tag-action@v6.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          create_annotated_tag: true
+
   release-go:
     needs: [bump]
+    # On a push, only release when a new tag was actually created. On a manual
+    # run, release whatever tag the workflow was dispatched for.
+    if: >-
+      !cancelled() &&
+      (github.event_name == 'workflow_dispatch' ||
+       (needs.bump.result == 'success' && needs.bump.outputs.new_tag != ''))
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
+          # GoReleaser refuses to release from an untagged commit and needs the
+          # full history for the changelog.
+          ref: ${{ needs.bump.outputs.new_tag || github.ref }}
           fetch-depth: 0
       - name: Set up Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v5
         with:
-          go-version: 1.17
+          go-version: stable
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v2
+        uses: goreleaser/goreleaser-action@v6
         with:
           distribution: goreleaser
-          version: latest
-          args: release --rm-dist
+          # Pinned to the major version that matches "version: 2" in
+          # .goreleaser.yaml, so a future GoReleaser v3 cannot break the build.
+          version: '~> v2'
+          args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
